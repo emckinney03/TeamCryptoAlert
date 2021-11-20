@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+	    <!-- The dialect specifies the type of database used in hibernate so that hibernate generate appropriate type of SQL statements. -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://ec2-18-223-252-15.us-east-2.compute.amazonaws.com:3306/TechExDB?useSSL=false</property>
+		<property name="hibernate.connection.username">pschmeits-remote</property>
+		<property name="hibernate.connection.password">pokemon1234</property>
+		<!-- you can create and update the table if it is not in DB. If create, it create new table everytime-->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<!-- True you will see sql in console -->
+		<property name="show_sql">true</property>
+		<mapping class="datamodel.User" />
+		<mapping class="datamodel.Note" />
+	</session-factory>
+</hibernate-configuration>
