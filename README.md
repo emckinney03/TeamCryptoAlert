@@ -1,2 +1,2 @@
 # TeamCryptoAlert
-Hey lil mama
+Hey lil mama, let me whisper in your ear.
