@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Date;
+import java.util.Timer;
 /**
  * Servlet implementation class TimerServlet
  */
@@ -37,9 +39,19 @@ public class TimerServlet extends HttpServlet {
 	}
 	
 	public  void  init()  throws  ServletException{
-        System.out.println("----------");
-        System.out.println("");
-        System.out.println("----------");
+		// might need to be on a seperate thread?
+		
+		while (true) {
+			long startTime = System.currentTimeMillis();
+			long elapsedTime = 0L;
+			long MINUTES_PER_LOOP = 30L;
+			while (elapsedTime < MINUTES_PER_LOOP*60*1000) {
+			    elapsedTime = (new Date()).getTime() - startTime;
+			}
+			
+			// Code that needs to be looped:
+			
+		}
 	}
 
 
