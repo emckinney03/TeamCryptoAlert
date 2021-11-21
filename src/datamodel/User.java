@@ -12,7 +12,8 @@ import javax.persistence.Table;
  CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT,    
   userName VARCHAR(30) NOT NULL,   
-  password VARCHAR(30) NOT NULL, 
+  password VARCHAR(30) NOT NULL,
+  email VARCHAR(30) NOT NULL, 
   PRIMARY KEY (id));
  */
 @Entity
@@ -30,19 +31,26 @@ public class User {
    @Column(name = "userPass")
    private String userPass;
 
+@Column(name = "userEmail")
+   private String userEmail;
+
+
+
    public User() {
 	  super();
    }
 
-   public User(Integer id, String userName, String userPass) {
+   public User(Integer id, String userName, String userPass, String userEmail) {
       this.id = id;
       this.userName = userName;
       this.userPass = userPass;
+      this.userEmail = userEmail;
    }
 
-   public User(String userName, String userPass) {
+   public User(String userName, String userPass, String userEmail) {
       this.userName = userName;
       this.userPass = userPass;
+      this.userEmail = userEmail;
    }
 
    public Integer getId() {
@@ -69,8 +77,15 @@ public class User {
       this.userPass = userPass;
    }
 
+   public String getuserEmail(){
+      return userEmail;
+   }
+   public void setUserEmail (String userEmail){
+      this.userEmail = userEmail;
+   }
+
    @Override
    public String toString() {
-      return "User: " + this.id + ", " + this.userName + ", " + this.userPass;
+      return "User: " + this.id + ", " + this.userName + ", " + this.userPass + ", "+ this.userEmail;
    }
 }
