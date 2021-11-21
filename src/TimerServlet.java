@@ -48,7 +48,6 @@ public class TimerServlet extends HttpServlet {
 			while (elapsedTime < MINUTES_PER_LOOP*60*1000) {
 			    elapsedTime = (new Date()).getTime() - startTime;
 			}
-			
 			// Code that needs to be looped:
 			
 		}
