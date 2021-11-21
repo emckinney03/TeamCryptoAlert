@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Table(name = "follows")
 public class follows {
 
-   @followID  // primary key
+   @ID  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "followID") // specify the column name. Without it, it will use method name
    private Integer followID;
@@ -37,17 +37,17 @@ public class follows {
 
 
 
-   public User() {
+   public Follows() {
 	  super();
    }
 
-   public User(Integer followID, Integer currencyID, Integer userID) {
+   public Follows(Integer followID, Integer currencyID, Integer userID) {
       this.followID = followID;
       this.currencyID = currencyID;
       this.userID = userID;
    }
 
-   public User(Integer currencyID, Integer userID) {
+   public Follows(Integer currencyID, Integer userID) {
       this.currencyID = currencyID;
       this.userID = userID;
    }

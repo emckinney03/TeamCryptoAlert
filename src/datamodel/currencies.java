@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "currencies")
 public class currencies {
 
-   @currencyID  // primary key
+   @ID  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "currencyID") // specify the column name. Without it, it will use method name
    private Integer currencyID;
@@ -26,11 +26,11 @@ public class currencies {
    @Column(name = "currencyName")
    private String userName;
  
-   public User() {
+   public Currencies() {
 	  super();
    }
 
-   public currencies(Integer currencyID, String currencyName) {
+   public Currencies(Integer currencyID, String currencyName) {
       this.currencyID = currencyID;
       this.currencyName = currencyName;
    }
