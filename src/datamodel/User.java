@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User {
 
-   @ID  // primary key
+   @Id  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id") // specify the column name. Without it, it will use method name
    private Integer id;

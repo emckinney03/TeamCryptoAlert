@@ -16,15 +16,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "currencies")
-public class currencies {
+public class Currencies {
 
-   @ID  // primary key
+   @Id  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "currencyID") // specify the column name. Without it, it will use method name
    private Integer currencyID;
 
    @Column(name = "currencyName")
-   private String userName;
+   private String currencyName;
  
    public Currencies() {
 	  super();

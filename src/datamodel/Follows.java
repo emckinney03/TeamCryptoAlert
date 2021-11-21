@@ -20,9 +20,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "follows")
-public class follows {
+public class Follows {
 
-   @ID  // primary key
+   @Id  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "followID") // specify the column name. Without it, it will use method name
    private Integer followID;
@@ -32,9 +32,6 @@ public class follows {
    
    @Column(name = "userID")
    private int userID;
-
-
-
 
 
    public Follows() {
