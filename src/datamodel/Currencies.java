@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "currencies")
-public class currencies {
+public class Currencies {
 
    @ID  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
