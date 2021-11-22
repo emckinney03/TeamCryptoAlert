@@ -35,6 +35,7 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userName = request.getParameter("userName");
 		String userPass = request.getParameter("userPass");
+		String userEmail = request.getParameter("userEmail");
 		
 		response.setContentType("text/html");
 
@@ -42,7 +43,7 @@ public class RegisterServlet extends HttpServlet {
 			userRegistrationFailed(response.getWriter(), userName);
 		}
 		else {
-			UtilDB.createUser(userName, userPass);
+			UtilDB.createUser(userName, userPass, userEmail);
 			userRegistrationSuccess(response.getWriter(), userName);
 		}
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/register.html");

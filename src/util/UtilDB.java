@@ -113,12 +113,12 @@ public class UtilDB {
       return resultList;
    }
 
-   public static void createUser(String userName, String password) {
+   public static void createUser(String userName, String password, String email) {
       Session session = getSessionFactory().openSession();
       Transaction tx = null;
       try {
          tx = session.beginTransaction();
-         session.save(new User(userName, password));
+         session.save(new User(userName, password, email));
          tx.commit();
       } catch (HibernateException e) {
          if (tx != null)

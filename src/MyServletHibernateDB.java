@@ -23,8 +23,8 @@ public class MyServletHibernateDB extends HttpServlet {
       response.setContentType("text/html");
 
       // #1
-      UtilDB.createUser("user1", "password1");
-      UtilDB.createUser("user2", "password2");
+      UtilDB.createUser("user1", "password1", "email1@gmail.com");
+      UtilDB.createUser("user2", "password2", "email1@gmail.com");
       
       // #2
       retrieveDisplayData(response.getWriter());
@@ -44,11 +44,13 @@ public class MyServletHibernateDB extends HttpServlet {
       for (User user : listUsers) {
          System.out.println("[DBG] " + user.getId() + ", " //
                + user.getUserName() + ", "
-               + user.getUserPass());
+               + user.getUserPass() + ", "
+               + user.getUserEmail());
 
          out.println("<li>" + user.getId() + ", " //
                + user.getUserName() + ", " //
-               + user.getUserPass() + "</li>");
+               + user.getUserPass() + ", "
+               + user.getUserEmail() + "</li>");
       }
       out.println("</ul>");
       out.println("</body></html>");
