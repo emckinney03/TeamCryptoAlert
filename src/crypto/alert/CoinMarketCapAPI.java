@@ -11,11 +11,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 public class CoinMarketCapAPI {
 
 	private HashMap<String, Double> coinPriceMap;
@@ -32,7 +34,9 @@ public class CoinMarketCapAPI {
 		
 	}
 	
-	public String getQuotes() {
+
+	
+	public void getQuotes() {
 		
 		// Set up API request
 		String uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
@@ -55,14 +59,13 @@ public class CoinMarketCapAPI {
 	    try {
 	        String result = makeAPICall(uri, paratmers);
 	        System.out.println(result);
-	        return result;
+	        parseForPrice(result, slugList);
 	      } catch (IOException e) {
 	        System.out.println("Error: cannont access content - " + e.toString());
 	      } catch (URISyntaxException e) {
 	        System.out.println("Error: Invalid URL " + e.toString());
 	      }
 	    // this can def be improved
-		return "NA";
 	}
 	
 	public static String makeAPICall(String uri, List<NameValuePair> parameters)
@@ -90,6 +93,22 @@ public class CoinMarketCapAPI {
 		    }
 
 		    return response_content;
-		  }
+	}
+	
+	public void parseForPrice(String json, List<String> slugList) {
+        if (json.equals("NA")) {
+            System.out.println("Somethings broken. Skipping parse.");
+            return;
+        }
+        int count = 0;
+        JSONObject obj = new JSONObject(json).getJSONObject("data");
+        for (String key: obj.keySet()) {
+            JSONObject coin = obj.getJSONObject(key);
+            System.out.println(coin.toString());
+            this.coinPriceMap.put(slugList.get(count), coin.getJSONObject("quote").getJSONObject("USD").getDouble("price"));
+            count++;
+        }
+
+    }
 	
 }
