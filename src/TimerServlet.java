@@ -40,17 +40,8 @@ public class TimerServlet extends HttpServlet {
 	
 	public  void  init()  throws  ServletException{
 		// might need to be on a seperate thread?
-		
-		while (true) {
-			long startTime = System.currentTimeMillis();
-			long elapsedTime = 0L;
-			long MINUTES_PER_LOOP = 30L;
-			while (elapsedTime < MINUTES_PER_LOOP*60*1000) {
-			    elapsedTime = (new Date()).getTime() - startTime;
-			}
-			// Code that needs to be looped:
-			
-		}
+		System.out.println("dwadw-----------");
+
 	}
 
 
