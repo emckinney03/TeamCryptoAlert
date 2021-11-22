@@ -15,7 +15,7 @@ import java.util.Timer;
 @WebServlet("/TimerServlet")
 public class TimerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    protected static final long MINUTES = 30;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,9 +39,26 @@ public class TimerServlet extends HttpServlet {
 	}
 	
 	public  void  init()  throws  ServletException{
-		// might need to be on a seperate thread?
-		System.out.println("dwadw-----------");
-
+		System.out.println("[DEBUG] - Starting timer thread.");
+		TimerThread timer = new TimerThread();
+		timer.start();
+	}
+	
+	private class TimerThread extends Thread {
+		public void run() {
+	        long startTime = System.currentTimeMillis();
+	        int i = 0;
+	        while (true) {
+	            System.out.println("[DEBUG] - " + this.getName() + ": New Thread is running on iteration " + i++);
+	            try {
+	                // TODO : run all code needed on loop
+	                Thread.sleep(MINUTES * 60 *1000);
+	            } catch (InterruptedException e) {
+	                e.printStackTrace();
+	            }
+	           
+	        }
+	    }
 	}
 
 
