@@ -77,7 +77,7 @@ public class User {
       this.userPass = userPass;
    }
 
-   public String getuserEmail(){
+   public String getUserEmail(){
       return userEmail;
    }
    public void setUserEmail (String userEmail){
