@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "currencies")
-public class Currencies {
+public class Currency {
 
    @Id  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +26,11 @@ public class Currencies {
    @Column(name = "currencyName")
    private String currencyName;
  
-   public Currencies() {
+   public Currency() {
 	  super();
    }
 
-   public Currencies(Integer currencyID, String currencyName) {
+   public Currency(Integer currencyID, String currencyName) {
       this.currencyID = currencyID;
       this.currencyName = currencyName;
    }
@@ -55,6 +55,6 @@ public class Currencies {
 
    @Override
    public String toString() {
-      return "Currencies: " + this.currencyID + ", " + this.currencyName;
+      return "Currency: " + this.currencyID + ", " + this.currencyName;
    }
 }

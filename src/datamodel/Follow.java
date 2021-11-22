@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "follows")
-public class Follows {
+public class Follow {
 
    @Id  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,17 +34,17 @@ public class Follows {
    private int userID;
 
 
-   public Follows() {
+   public Follow() {
 	  super();
    }
 
-   public Follows(Integer followID, Integer currencyID, Integer userID) {
+   public Follow(Integer followID, Integer currencyID, Integer userID) {
       this.followID = followID;
       this.currencyID = currencyID;
       this.userID = userID;
    }
 
-   public Follows(Integer currencyID, Integer userID) {
+   public Follow(Integer currencyID, Integer userID) {
       this.currencyID = currencyID;
       this.userID = userID;
    }
@@ -76,6 +76,6 @@ public class Follows {
 
    @Override
    public String toString() {
-      return "Follows: " + this.followID + ", " + this.currencyID + ", " + this.userID;
+      return "Follow: " + this.followID + ", " + this.currencyID + ", " + this.userID;
    }
 }
