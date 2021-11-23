@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
 
 		Cookie loginSuccess = new Cookie("validCredentials", userName);
 		response.addCookie(loginSuccess);
-		response.sendRedirect("/TechExercise/session.jsp");
+		response.sendRedirect("/TeamCryptoAlert/session.jsp");
 	}
 	//-------------------------------------------------------------------
 	
