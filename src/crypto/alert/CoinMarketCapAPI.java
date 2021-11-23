@@ -54,12 +54,11 @@ public class CoinMarketCapAPI {
 		}
 	    paratmers.add(new BasicNameValuePair("slug",queryParam));
 	    
-	    // Make API request
-	    // TODO : do stuff with new info and what not. parse json?
 	    try {
 	        String result = makeAPICall(uri, paratmers);
 	        System.out.println(result);
 	        parseForPrice(result, slugList);
+	        // TODO : update database?
 	      } catch (IOException e) {
 	        System.out.println("Error: cannont access content - " + e.toString());
 	      } catch (URISyntaxException e) {
