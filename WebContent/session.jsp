@@ -35,6 +35,7 @@
 		%>
 		<h3>Welcome, <%=validLogin%></h3> <br>
 		<%-- <h4>Note = <%=sessionID %></h4> --%>
+		<%--
 		<form action="<%UtilDB.createNote(validLogin, request.getParameter("noteName"), request.getParameter("noteContents")); %>" method="POST">
 			Label: <input type="text" required="required" name="noteName"> <br>
 			Note: <br>
@@ -73,6 +74,7 @@
 			<% } %>
 			
 		</table>
+		--%>
 		
 		<br><br>
 		<form action="LogoutServlet" method="post">
