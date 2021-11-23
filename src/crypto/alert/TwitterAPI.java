@@ -25,16 +25,16 @@ public class TwitterAPI {
 	private static final String LIST_TWEET_URL = "https://api.twitter.com/2/lists/1462976429876989952/tweets";
 	
 	public static void getTweetsFromList() {
-		try {
-			//String json = makeAPICall();
-			
-			
-			
-			
-		} catch (URISyntaxException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			String json = makeAPICall();
+//			
+//			
+//			
+//			
+//		} catch (URISyntaxException | IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	
