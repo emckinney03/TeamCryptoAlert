@@ -8,13 +8,14 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.url">jdbc:mysql://ec2-3-22-233-35.us-east-2.compute.amazonaws.com:3306/CryptoAlertDB?useSSL=false</property>
-		<property name="hibernate.connection.username">emckinney-remote</property>
+		<property name="hibernate.connection.username">emckinneyremote</property>
 		<property name="hibernate.connection.password">emckinney</property>
 		<!-- you can create and update the table if it is not in DB. If create, it create new table everytime-->
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- True you will see sql in console -->
 		<property name="show_sql">true</property>
 		<mapping class="datamodel.User" />
-		<mapping class="datamodel.Note" />
+		<mapping class="datamodel.Currency" />
+		<mapping class="datamodel.Follow" />
 	</session-factory>
 </hibernate-configuration>
