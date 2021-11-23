@@ -49,7 +49,7 @@ public class Follow {
       this.userID = userID;
    }
 
-   public Integer getfollowID() {
+   public Integer getFollowID() {
       return followID;
    }
 

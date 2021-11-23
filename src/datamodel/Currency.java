@@ -25,14 +25,18 @@ public class Currency {
 
    @Column(name = "currencyName")
    private String currencyName;
+   
+   @Column(name = "currencyPrice")
+   private Integer currencyPrice;
  
    public Currency() {
 	  super();
    }
 
-   public Currency(Integer currencyID, String currencyName) {
+   public Currency(Integer currencyID, String currencyName, Integer currencyPrice) {
       this.currencyID = currencyID;
       this.currencyName = currencyName;
+      this.currencyPrice = currencyPrice;
    }
 
 
@@ -44,12 +48,20 @@ public class Currency {
       this.currencyID = currencyID;
    }
 
-   public String getcurrencyName() {
+   public String getCurrencyName() {
       return currencyName;
    }
 
    public void setCurrencyName(String currencyName) {
       this.currencyName = currencyName;
+   }
+   
+   public Integer getCurrencyPrice() {
+	      return currencyID;
+	   }
+
+   public void setCurrencyPrice(Integer currencyPrice) {
+      this.currencyPrice = currencyPrice;
    }
   
 

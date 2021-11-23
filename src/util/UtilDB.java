@@ -15,7 +15,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import datamodel.User;
-import datamodel.Note;
+//import datamodel.Note;
+import datamodel.Follow;
+import datamodel.Currency;
 
 /**
  * @since JavaSE-1.8
@@ -129,23 +131,12 @@ public class UtilDB {
       }
    }
    
-   public static List<Note> listNotes(String userName) {
-      List<Note> resultList = new ArrayList<Note>();
-
+   public static void createCurrency(Integer currencyID, String currencyName, Integer currencyPrice) {
       Session session = getSessionFactory().openSession();
       Transaction tx = null;
-
       try {
          tx = session.beginTransaction();
-         // System.out.println((User)session.get(User.class, 1)); // use "get" to fetch data
-         // Query q = session.createQuery("FROM User");
-         List<?> notes = session.createQuery("FROM Note").list();
-         for (Iterator<?> iterator = notes.iterator(); iterator.hasNext();) {
-            Note note = (Note) iterator.next();
-            if (note.getOwnerID().equals(userName)) {
-               resultList.add(note);
-            }
-         }
+         session.save(new Currency(currencyID, currencyName, currencyPrice));
          tx.commit();
       } catch (HibernateException e) {
          if (tx != null)
@@ -154,47 +145,102 @@ public class UtilDB {
       } finally {
          session.close();
       }
-      return resultList;
+   }
+   
+	public static List<Currency> listCurrencies(String currencyName) {
+		List<Currency> resultList = new ArrayList<Currency>();
+
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			List<?> currencies = session.createQuery("FROM Currency").list();
+			for (Iterator<?> iterator = currencies.iterator(); iterator.hasNext();) {
+				Currency currency = (Currency) iterator.next();
+				if (currency.getCurrencyName().equals(currencyName)) {
+					resultList.add(currency);
+				}
+			}
+			tx.commit();
+		} 
+		catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} 
+		finally {
+			session.close();
+		}
+		return resultList;
 	}
    
-	public static void createNote(String ownerID, String label, String note) {
-	   if (!(ownerID == null || label == null || note == null)) {
-		   Session session = getSessionFactory().openSession();
-		   Transaction tx = null;
-		   try {
-			   tx = session.beginTransaction();
-			   session.save(new Note(ownerID, label, note));
-			   tx.commit();
-		   } catch (HibernateException e) {
-			   if (tx != null)
-				   tx.rollback();
-			   e.printStackTrace();
-		   } finally {
-			   session.close();
-		   }
-	   }
-	}
+//   public static List<Note> listNotes(String userName) {
+//      List<Note> resultList = new ArrayList<Note>();
+//
+//      Session session = getSessionFactory().openSession();
+//      Transaction tx = null;
+//
+//      try {
+//         tx = session.beginTransaction();
+//         // System.out.println((User)session.get(User.class, 1)); // use "get" to fetch data
+//         // Query q = session.createQuery("FROM User");
+//         List<?> notes = session.createQuery("FROM Note").list();
+//         for (Iterator<?> iterator = notes.iterator(); iterator.hasNext();) {
+//            Note note = (Note) iterator.next();
+//            if (note.getOwnerID().equals(userName)) {
+//               resultList.add(note);
+//            }
+//         }
+//         tx.commit();
+//      } catch (HibernateException e) {
+//         if (tx != null)
+//            tx.rollback();
+//         e.printStackTrace();
+//      } finally {
+//         session.close();
+//      }
+//      return resultList;
+//	}
+   
+//	public static void createNote(String ownerID, String label, String note) {
+//	   if (!(ownerID == null || label == null || note == null)) {
+//		   Session session = getSessionFactory().openSession();
+//		   Transaction tx = null;
+//		   try {
+//			   tx = session.beginTransaction();
+//			   session.save(new Note(ownerID, label, note));
+//			   tx.commit();
+//		   } catch (HibernateException e) {
+//			   if (tx != null)
+//				   tx.rollback();
+//			   e.printStackTrace();
+//		   } finally {
+//			   session.close();
+//		   }
+//	   }
+//	}
    
    // Main code for method modified from CodeJava.net (https://www.codejava.net/frameworks/hibernate/hibernate-basics-3-ways-to-delete-an-entity-from-the-datastore)
-   public static void deleteNote(int noteID) {
-	   Session session = getSessionFactory().openSession();
-	   Transaction tx = null;
-	   try {
-		   tx = session.beginTransaction();
-		   Serializable id = noteID;
-		   Object persistentInstance = session.load(Note.class, id);
-		   if (persistentInstance != null) {
-			   System.out.println("Deleting... " + persistentInstance.toString());
-			   session.delete(persistentInstance);
-			   tx.commit();
-		   }
-	   } catch (HibernateException e) {
-		   if (tx != null)
-			   tx.rollback();
-		   e.printStackTrace();
-	   } finally {
-		   session.close();
-	   }
-	}
+//   public static void deleteNote(int noteID) {
+//	   Session session = getSessionFactory().openSession();
+//	   Transaction tx = null;
+//	   try {
+//		   tx = session.beginTransaction();
+//		   Serializable id = noteID;
+//		   Object persistentInstance = session.load(Note.class, id);
+//		   if (persistentInstance != null) {
+//			   System.out.println("Deleting... " + persistentInstance.toString());
+//			   session.delete(persistentInstance);
+//			   tx.commit();
+//		   }
+//	   } catch (HibernateException e) {
+//		   if (tx != null)
+//			   tx.rollback();
+//		   e.printStackTrace();
+//	   } finally {
+//		   session.close();
+//	   }
+//	}
 }
 
