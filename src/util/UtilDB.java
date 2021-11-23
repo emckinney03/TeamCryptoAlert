@@ -131,12 +131,12 @@ public class UtilDB {
       }
    }
    
-   public static void createCurrency(Integer currencyID, String currencyName, Integer currencyPrice) {
+   public static void createCurrency(Integer currencyID, String currencyName) {
       Session session = getSessionFactory().openSession();
       Transaction tx = null;
       try {
          tx = session.beginTransaction();
-         session.save(new Currency(currencyID, currencyName, currencyPrice));
+         session.save(new Currency(currencyID, currencyName));
          tx.commit();
       } catch (HibernateException e) {
          if (tx != null)

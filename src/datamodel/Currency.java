@@ -26,17 +26,22 @@ public class Currency {
    @Column(name = "currencyName")
    private String currencyName;
    
-   @Column(name = "currencyPrice")
-   private Integer currencyPrice;
+//   @Column(name = "currencyPrice")
+//   private Integer currencyPrice;
  
    public Currency() {
 	  super();
    }
 
-   public Currency(Integer currencyID, String currencyName, Integer currencyPrice) {
+//   public Currency(Integer currencyID, String currencyName, Integer currencyPrice) {
+//      this.currencyID = currencyID;
+//      this.currencyName = currencyName;
+//      this.currencyPrice = currencyPrice;
+//   }
+   
+   public Currency(Integer currencyID, String currencyName) {
       this.currencyID = currencyID;
       this.currencyName = currencyName;
-      this.currencyPrice = currencyPrice;
    }
 
 
@@ -56,13 +61,13 @@ public class Currency {
       this.currencyName = currencyName;
    }
    
-   public Integer getCurrencyPrice() {
-	      return currencyID;
-	   }
-
-   public void setCurrencyPrice(Integer currencyPrice) {
-      this.currencyPrice = currencyPrice;
-   }
+//   public Integer getCurrencyPrice() {
+//	      return currencyID;
+//	   }
+//
+//   public void setCurrencyPrice(Integer currencyPrice) {
+//      this.currencyPrice = currencyPrice;
+//   }
   
 
    @Override
