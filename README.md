@@ -1,2 +1,2 @@
 # TeamCryptoAlert
-No.
+Team crypto alert 
