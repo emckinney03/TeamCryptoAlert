@@ -16,8 +16,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import datamodel.Currency;
+import util.UtilDB;
+
 public class CoinMarketCapAPI {
 
 	private HashMap<String, Double> coinPriceMap;
@@ -26,7 +31,10 @@ public class CoinMarketCapAPI {
 	
 	public CoinMarketCapAPI() {
 		coinPriceMap = new HashMap<>();
-		
+		List<Currency> currencyList = UtilDB.listCurrencies();
+		for (Currency c : currencyList) {
+			coinPriceMap.put(c.getCurrencyName(), 0.0);
+		}
 	}
 	
 	// slug is term for coin. i.e bitcoin's slug is bitcoin. This may need to change to use Ids.
@@ -40,9 +48,9 @@ public class CoinMarketCapAPI {
 		
 		// Set up API request
 		String uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
-		List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
-		List<String> slugList = new ArrayList<>();
-		slugList.add("bitcoin");
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		List<String> slugList = Arrays.asList((String[]) coinPriceMap.keySet().toArray());
+		// slugList.add("bitcoin");
 		// TODO : Get all coins from DB and add to slugList. Or however thats gonna work.
 		String queryParam = "";
 		for (int i = 0; i < slugList.size(); i++) { 
@@ -52,10 +60,10 @@ public class CoinMarketCapAPI {
 				queryParam += "," + slugList.get(0);
 			}
 		}
-	    paratmers.add(new BasicNameValuePair("slug",queryParam));
+	    parameters.add(new BasicNameValuePair("slug",queryParam));
 	    
 	    try {
-	        String result = makeAPICall(uri, paratmers);
+	        String result = makeAPICall(uri, parameters);
 	        System.out.println(result);
 	        parseForPrice(result, slugList);
 	        // TODO : update database?

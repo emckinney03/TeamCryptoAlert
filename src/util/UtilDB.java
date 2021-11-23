@@ -147,7 +147,7 @@ public class UtilDB {
       }
    }
    
-   public static List<Currency> listCurrencies(String currencyName) {
+   public static List<Currency> lookupCurrency(String currencyName) {
 	   List<Currency> resultList = new ArrayList<Currency>();
 
 	   Session session = getSessionFactory().openSession();
@@ -161,6 +161,32 @@ public class UtilDB {
 	         if (currency.getCurrencyName().equals(currencyName)) {
 	            resultList.add(currency);
 	         }
+	      }
+	      tx.commit();
+	   } 
+	   catch (HibernateException e) {
+	      if (tx != null)
+	         tx.rollback();
+	      e.printStackTrace();
+	   } 
+	   finally {
+	      session.close();
+	   }
+	   return resultList;
+	}
+   
+   public static List<Currency> listCurrencies() {
+	   List<Currency> resultList = new ArrayList<Currency>();
+
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+
+	   try {
+	      tx = session.beginTransaction();
+	      List<?> currencies = session.createQuery("FROM Currency").list();
+	      for (Iterator<?> iterator = currencies.iterator(); iterator.hasNext();) {
+	         Currency currency = (Currency) iterator.next();
+	         resultList.add(currency);
 	      }
 	      tx.commit();
 	   } 
