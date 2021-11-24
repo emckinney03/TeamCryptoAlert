@@ -1,7 +1,7 @@
 <%-- Modified from Kasun Dharmasdasa (https://medium.com/@kasunpdh/session-management-in-java-using-servlet-filters-and-cookies-7c536b40448f) --%>
 
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII" import="util.UtilDB" import="datamodel.Note" import="java.util.List" import="javax.servlet.http.HttpSession" %>
+    pageEncoding="US-ASCII" import="util.UtilDB" import="datamodel.Currency" import="java.util.List" import="javax.servlet.http.HttpSession" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>

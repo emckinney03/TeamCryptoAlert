@@ -10,11 +10,11 @@ import javax.persistence.Table;
 /**
  * @since J2SE-1.8
  CREATE TABLE users (
-  id INT NOT NULL AUTO_INCREMENT,    
+  userID INT NOT NULL AUTO_INCREMENT,    
   userName VARCHAR(30) NOT NULL,   
   password VARCHAR(30) NOT NULL,
   email VARCHAR(30) NOT NULL, 
-  PRIMARY KEY (id));
+  PRIMARY KEY (userID));
  */
 @Entity
 @Table(name = "users")
@@ -22,8 +22,8 @@ public class User {
 
    @Id  // primary key
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id") // specify the column name. Without it, it will use method name
-   private Integer id;
+   @Column(name = "userID") // specify the column name. Without it, it will use method name
+   private Integer userID;
 
    @Column(name = "userName")
    private String userName;
@@ -40,8 +40,8 @@ public class User {
 	  super();
    }
 
-   public User(Integer id, String userName, String userPass, String userEmail) {
-      this.id = id;
+   public User(Integer userID, String userName, String userPass, String userEmail) {
+      this.userID = userID;
       this.userName = userName;
       this.userPass = userPass;
       this.userEmail = userEmail;
@@ -54,11 +54,11 @@ public class User {
    }
 
    public Integer getId() {
-      return id;
+      return userID;
    }
 
-   public void setId(Integer id) {
-      this.id = id;
+   public void setId(Integer userID) {
+      this.userID = userID;
    }
 
    public String getUserName() {
@@ -86,6 +86,6 @@ public class User {
 
    @Override
    public String toString() {
-      return "User: " + this.id + ", " + this.userName + ", " + this.userPass + ", "+ this.userEmail;
+      return "User: " + this.userID + ", " + this.userName + ", " + this.userPass + ", "+ this.userEmail;
    }
 }
