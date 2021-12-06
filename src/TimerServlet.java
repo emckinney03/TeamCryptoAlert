@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import crypto.alert.CoinMarketCapAPI;
+import crypto.alert.TwitterAPI;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 /**
@@ -52,9 +56,17 @@ public class TimerServlet extends HttpServlet {
 	            System.out.println("[DEBUG] - " + this.getName() + ": New Thread is running on iteration " + i++);
 	            try {
 	                // TODO : run all code needed on loop
-	                Thread.sleep(MINUTES * 60 *1000);
+	            	
+	            	CoinMarketCapAPI coinAPI = new CoinMarketCapAPI();
+	            	coinAPI.getQuotes();
+	            	
+	            	ArrayList<String> tweets = TwitterAPI.getTweetsFromList();
+	            	
+	            	
+	            	Thread.sleep(MINUTES * 60 *1000);
 	            } catch (InterruptedException e) {
 	                e.printStackTrace();
+	                
 	            }
 	           
 	        }

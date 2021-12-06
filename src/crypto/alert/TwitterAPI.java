@@ -20,26 +20,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class TwitterAPI {
+	
+	// bitcoin ethereum, dogecoin, cardano
 
 	private static final String BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAKnNVwEAAAAAMgOJo7a5myIVyoCvSq6rhmh8kl0%3DvFynAnfUJAU9nKMPb44Egr4oOr8moL6ltjbO8z4HiVpdf5KZyb";
 	private static final String LIST_TWEET_URL = "https://api.twitter.com/2/lists/1462976429876989952/tweets";
 	
-	public static void getTweetsFromList() {
-//		try {
-//			String json = makeAPICall();
-//			
-//			
-//			
-//			
-//		} catch (URISyntaxException | IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	}
-	
-	
-	public static void addUserToList() {
-		
+	public static ArrayList<String> getTweetsFromList() {
+		try {
+			String json = makeAPICall(LIST_TWEET_URL, false);
+			return parseTweets(json);
+		} catch (URISyntaxException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static String makeAPICall(String url, boolean user)
@@ -69,10 +64,11 @@ public class TwitterAPI {
         return response_content;
     }
 
-    public static void parseForPrice(String json) {
+    public static ArrayList<String> parseTweets(String json) {
+    	ArrayList<String> list = new ArrayList<>();
         if (json.equals("NA")) {
             System.out.println("Somethings broken. Skipping parse. Twitter.");
-            return;
+            return list;
         }
         int count = 0;
         JSONArray arr = (new JSONObject(json)).getJSONArray("data");
@@ -82,24 +78,21 @@ public class TwitterAPI {
             JSONObject obj = (JSONObject) it.next();
             String author_id = obj.getString("author_id");
             String text = obj.getString("text");
-
-            try {
-                String userJson = makeAPICall("https://api.twitter.com/2/users/" + author_id, true);
-                JSONObject userJSONObj = new JSONObject(userJson);
-                String username = userJSONObj.getJSONObject("data").getString("username");
-                System.out.println(username);
-                break;
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            list.add(text);
+//            try {
+//                String userJson = makeAPICall("https://api.twitter.com/2/users/" + author_id, true);
+//                JSONObject userJSONObj = new JSONObject(userJson);
+//                String username = userJSONObj.getJSONObject("data").getString("username");
+//                System.out.println(username);
+//                break;
+//            } catch (URISyntaxException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
         }
-
-
-
-
+        return list;
     }
 	
 	

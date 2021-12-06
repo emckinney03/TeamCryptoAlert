@@ -66,7 +66,6 @@ public class CoinMarketCapAPI {
 	        String result = makeAPICall(uri, parameters);
 	        System.out.println(result);
 	        parseForPrice(result, slugList);
-	        // TODO : update database?
 	      } catch (IOException e) {
 	        System.out.println("Error: cannont access content - " + e.toString());
 	      } catch (URISyntaxException e) {
