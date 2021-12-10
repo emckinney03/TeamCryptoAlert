@@ -58,6 +58,30 @@ public class UtilDB {
       }
       return resultList;
    }
+   
+   public static List<Follow> listFollow() {
+	      List<Follow> resultList = new ArrayList<Follow>();
+
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;  // each process needs transaction and commit the changes in DB.
+
+	      try {
+	         tx = session.beginTransaction();
+	         List<?> follows = session.createQuery("FROM follows").list();
+	         for (Iterator<?> iterator = follows.iterator(); iterator.hasNext();) {
+	            Follow follow = (Follow) iterator.next();
+	            resultList.add(follow);
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
 
    public static List<User> listUsers(String keyword) {
       List<User> resultList = new ArrayList<User>();
