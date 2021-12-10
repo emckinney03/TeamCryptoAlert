@@ -44,6 +44,10 @@ public class CoinMarketCapAPI {
 	
 
 	
+	public HashMap<String, Double> getCoinPriceMap() {
+		return coinPriceMap;
+	}
+
 	public void getQuotes() {
 		
 		// Set up API request
@@ -51,7 +55,6 @@ public class CoinMarketCapAPI {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		List<String> slugList = Arrays.asList((String[]) coinPriceMap.keySet().toArray());
 		// slugList.add("bitcoin");
-		// TODO : Get all coins from DB and add to slugList. Or however thats gonna work.
 		String queryParam = "";
 		for (int i = 0; i < slugList.size(); i++) { 
 			if (i == 0) {
