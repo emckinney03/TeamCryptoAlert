@@ -67,7 +67,7 @@ public class UtilDB {
 
 	      try {
 	         tx = session.beginTransaction();
-	         List<?> follows = session.createQuery("FROM follows").list();
+	         List<?> follows = session.createQuery("FROM Follow").list();
 	         for (Iterator<?> iterator = follows.iterator(); iterator.hasNext();) {
 	            Follow follow = (Follow) iterator.next();
 	            resultList.add(follow);
@@ -155,12 +155,12 @@ public class UtilDB {
       }
    }
    
-   public static void createCurrency(Integer currencyID, String currencyName) {
+   public static void createCurrency(String currencyName) {
       Session session = getSessionFactory().openSession();
       Transaction tx = null;
       try {
          tx = session.beginTransaction();
-         session.save(new Currency(currencyID, currencyName));
+         session.save(new Currency(currencyName));
          tx.commit();
       } catch (HibernateException e) {
          if (tx != null)

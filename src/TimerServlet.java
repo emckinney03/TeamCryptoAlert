@@ -9,12 +9,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import crypto.alert.CoinMarketCapAPI;
 import crypto.alert.TwitterAPI;
+import datamodel.Currency;
+import datamodel.Follow;
 import datamodel.User;
 import util.UtilDB;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
+import java.util.stream.Collectors;
+
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Servlet implementation class TimerServlet
@@ -58,14 +71,22 @@ public class TimerServlet extends HttpServlet {
 
 	private class TimerThread extends Thread {
 		
-		List<User> users;
+		private List<User> users;
+		private List<Follow> follows;
+		private List<Currency> currencies;
 		
 		public TimerThread() {
 			users = new ArrayList<>();
+			follows = new ArrayList<>();
+			currencies = new ArrayList<>();
 		}
 		
 		public void run() {
 			long startTime = System.currentTimeMillis();
+			List<Follow> bitcoinFollows = new ArrayList<>();
+			List<Follow> dogecoinFollows = new ArrayList<>();
+			List<Follow> cardanoFollows = new ArrayList<>();
+			List<Follow> ethereumFollows = new ArrayList<>();
 			int i = 0;
 			while (true) {
 				System.out.println("[DEBUG] - " + this.getName() + ": New Thread is running on iteration " + i++);
@@ -73,24 +94,56 @@ public class TimerServlet extends HttpServlet {
 					
 					// update list of users
 					users = UtilDB.listUsers();
+					follows = UtilDB.listFollow();
+					currencies = UtilDB.listCurrencies();
 					
-					CoinMarketCapAPI coinAPI = new CoinMarketCapAPI();
-					coinAPI.getQuotes();
 					
-
-					ArrayList<String> tweets = TwitterAPI.getTweetsFromList();
 					
-					for (String tweet : tweets) {
-						tweet = tweet.toLowerCase();
-						if (tweet.contains("$btc") || tweet.contains("bitcoin")) {
-							notifyUsers("bitcoin");
-						} if (tweet.contains("$doge") || tweet.contains("dogecoin")) {
-							notifyUsers("dogecoin");
-						} if (tweet.contains("$ada") || tweet.contains("cardano")) {
-							notifyUsers("cardano");
-						} if (tweet.contains("$eth") || tweet.contains("ethereum")) {
-							notifyUsers("ethereum");
+					int bitcoinId = -1;
+					int dogecoinId = -1;
+					int cardanoId = -1;
+					int ethereumId = -1;
+					
+					for (Currency coin : currencies) {
+						if (coin.getCurrencyName().equals("bitcoin")) {
+							bitcoinId = coin.getCurrencyID();
+						} else if (coin.getCurrencyName().equals("dogecoin")) {
+							dogecoinId = coin.getCurrencyID();
+						} else if (coin.getCurrencyName().equals("cardano")) {
+							cardanoId = coin.getCurrencyID();
+						} else if (coin.getCurrencyName().equals("ethereum")) {
+							ethereumId = coin.getCurrencyID();
 						}
+					}
+					if (bitcoinId != -1 && dogecoinId != -1 && cardanoId != -1 && ethereumId != -1) {
+						final int bitcoinId2 = bitcoinId;
+						final int dogecoinId2 = dogecoinId;
+						final int cardanoId2 = cardanoId;
+						final int ethereumId2 = ethereumId;
+						bitcoinFollows = follows.stream().filter(f -> f.getCurrencyID() == bitcoinId2).collect(Collectors.toList());
+						dogecoinFollows = follows.stream().filter(f -> f.getCurrencyID() == dogecoinId2).collect(Collectors.toList());
+						cardanoFollows = follows.stream().filter(f -> f.getCurrencyID() == cardanoId2).collect(Collectors.toList());
+						ethereumFollows = follows.stream().filter(f -> f.getCurrencyID() == ethereumId2).collect(Collectors.toList());
+						CoinMarketCapAPI coinAPI = new CoinMarketCapAPI();
+						coinAPI.getQuotes();
+						
+						
+						ArrayList<String> tweets = TwitterAPI.getTweetsFromList();
+						
+						for (String tweet : tweets) {
+							tweet = tweet.toLowerCase();
+							if (tweet.contains("$btc") || tweet.contains("bitcoin")) {
+								notifyUsers(bitcoinFollows, tweet);
+							} if (tweet.contains("$doge") || tweet.contains("dogecoin")) {
+								notifyUsers(dogecoinFollows, tweet);
+							} if (tweet.contains("$ada") || tweet.contains("cardano")) {
+								notifyUsers(cardanoFollows, tweet);
+							} if (tweet.contains("$eth") || tweet.contains("ethereum")) {
+								notifyUsers(ethereumFollows, tweet);
+							}
+						}
+					} else {
+						System.out.println("[ERROR] - failed to acquire coin ids. Timer set for another 30 minutes.");
 					}
 					
 					Thread.sleep(MINUTES * 60 * 1000);
@@ -102,9 +155,70 @@ public class TimerServlet extends HttpServlet {
 			}
 		}
 		
-		private void notifyUsers(String coin) {
+		private void notifyUsers(List<Follow> followers, String tweet) {
+			for (Follow follow : followers) {
+				User user = users.stream().filter(u -> u.getId() == follow.getUserID()).findFirst().get();
+				sendMail(user.getUserEmail(), tweet);
+			}
 			
 		}
+		
+		private boolean sendMail(String to, String tweet) {
+	        // Sender's email ID needs to be mentioned
+	        String from = "teamcryptoalert@gmail.com";
+
+	        // Assuming you are sending email from through gmails smtp
+	        String host = "smtp.gmail.com";
+
+	        // Get system properties
+	        Properties properties = System.getProperties();
+
+	        // Setup mail server
+	        properties.put("mail.smtp.host", host);
+	        properties.put("mail.smtp.port", "465");
+	        properties.put("mail.smtp.ssl.enable", "true");
+	        properties.put("mail.smtp.auth", "true");
+
+	        // Get the Session object.// and pass username and password
+	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+
+	            protected PasswordAuthentication getPasswordAuthentication() {
+
+	                return new PasswordAuthentication("teamcryptoalert@gmail.com", "CryptoAlert8!");
+
+	            }
+
+	        });
+
+	        // Used to debug SMTP issues
+	        session.setDebug(true);
+
+	        try {
+	            // Create a default MimeMessage object.
+	            MimeMessage message = new MimeMessage(session);
+
+	            // Set From: header field of the header.
+	            message.setFrom(new InternetAddress(from));
+
+	            // Set To: header field of the header.
+	            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+	            // Set Subject: header field
+	            message.setSubject("TeamCryptoAlert Twitter notification");
+
+	            // Now set the actual message
+	            message.setText("A user followed by TeamCryptoAlert has mentioned a crypto of interest to you. See the tweet below:\n\n" + tweet);
+
+	            System.out.println("sending...");
+	            // Send message
+	            Transport.send(message);
+	            System.out.println("Sent message successfully....");
+	            return true;
+	        } catch (MessagingException mex) {
+	            mex.printStackTrace();
+	            return false;
+	        }
+	    }
 	}
 	
 	

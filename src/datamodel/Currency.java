@@ -39,10 +39,14 @@ public class Currency {
 //      this.currencyPrice = currencyPrice;
 //   }
    
-   public Currency(Integer currencyID, String currencyName) {
-      this.currencyID = currencyID;
+   public Currency(String currencyName) {
       this.currencyName = currencyName;
    }
+   
+   public Currency(Integer currencyID, String currencyName) {
+	      this.currencyID = currencyID;
+	      this.currencyName = currencyName;
+	   }
 
 
    public Integer getCurrencyID() {
