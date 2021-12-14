@@ -2,6 +2,7 @@ package session;
 
 
 import datamodel.User;
+import datamodel.Follow;
 import util.UtilDB;
 
 import java.io.IOException;
@@ -36,11 +37,24 @@ public class RegisterServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String userPass = request.getParameter("userPass");
 		String userEmail = request.getParameter("userEmail");
-		//String crypto1 = request.getParameter("crypto1");
-		//String crypto2 = request.getParameter("crypto2");
-		//String crypto3 = request.getParameter("crypto3");
-		//String crypto4 = request.getParameter("crypto4");
+		UtilDB.createUser(userName, userPass, userEmail);
+		boolean crypto1= false;
+		boolean crypto2 = false;
+		boolean crypto3 = false;
+		boolean crypto4 = false;
 		
+		if (crypto1 == true) {
+	UtilDB.createFollow(1, UtilDB.lookupUser(userName).get(0).getId());	
+		}
+		if (crypto2 == true) {
+			UtilDB.createFollow(2, UtilDB.lookupUser(userName).get(0).getId());		
+				}
+		if (crypto3 == true) {
+			UtilDB.createFollow(3, UtilDB.lookupUser(userName).get(0).getId());
+				}
+		if (crypto4 == true) {
+			UtilDB.createFollow(4, UtilDB.lookupUser(userName).get(0).getId());	
+				}
 		response.setContentType("text/html");
 
 		if (UtilDB.lookupUser(userName).size() > 0) {

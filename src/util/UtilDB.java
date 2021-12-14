@@ -98,6 +98,7 @@ public class UtilDB {
             User user = (User) iterator.next();
             if (user.getUserName().startsWith(keyword)) {
                resultList.add(user);
+      System.out.println(" TESTING " + user.getUserName());
             }
          }
          tx.commit();
@@ -154,7 +155,22 @@ public class UtilDB {
          session.close();
       }
    }
-   
+   public static void createFollow(Integer currencyID, Integer userID) {
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         session.save(new Follow(currencyID, userID));
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	   }
+	   
    public static void createCurrency(String currencyName) {
       Session session = getSessionFactory().openSession();
       Transaction tx = null;
