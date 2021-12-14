@@ -124,12 +124,13 @@ public class TimerServlet extends HttpServlet {
 						dogecoinFollows = follows.stream().filter(f -> f.getCurrencyID() == dogecoinId2).collect(Collectors.toList());
 						cardanoFollows = follows.stream().filter(f -> f.getCurrencyID() == cardanoId2).collect(Collectors.toList());
 						ethereumFollows = follows.stream().filter(f -> f.getCurrencyID() == ethereumId2).collect(Collectors.toList());
+						System.out.println("[DEBUG] - grabbing coin market prices.");
 						CoinMarketCapAPI coinAPI = new CoinMarketCapAPI();
 						coinAPI.getQuotes();
 						
-						
+						System.out.println("[DEBUG] - grabbing tweet from api.");
 						ArrayList<String> tweets = TwitterAPI.getTweetsFromList();
-						
+						System.out.println("[DEBUG] - sending emails.");
 						for (String tweet : tweets) {
 							tweet = tweet.toLowerCase();
 							if (tweet.contains("$btc") || tweet.contains("bitcoin")) {
@@ -145,9 +146,9 @@ public class TimerServlet extends HttpServlet {
 					} else {
 						System.out.println("[ERROR] - failed to acquire coin ids. Timer set for another 30 minutes.");
 					}
-					
+					System.out.println("[DEBUG] - thread now sleeping.");
 					Thread.sleep(MINUTES * 60 * 1000);
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 
 				}
@@ -155,12 +156,13 @@ public class TimerServlet extends HttpServlet {
 			}
 		}
 		
-		private void notifyUsers(List<Follow> followers, String tweet) {
+		private void notifyUsers(List<Follow> followers, String tweet) {	
 			for (Follow follow : followers) {
 				User user = users.stream().filter(u -> u.getId() == follow.getUserID()).findFirst().get();
 				sendMail(user.getUserEmail(), tweet);
+				System.out.println("[DEBUG] - send email to " + user.getUserEmail() + " info about tweet: " +  tweet);
 			}
-			
+			System.out.println("[DEBUG] - done sending emails.");
 		}
 		
 		private boolean sendMail(String to, String tweet) {

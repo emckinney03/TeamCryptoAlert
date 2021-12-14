@@ -37,47 +37,36 @@ public class CoinMarketCapAPI {
 		}
 	}
 	
-	// slug is term for coin. i.e bitcoin's slug is bitcoin. This may need to change to use Ids.
-	public void addCoin(String slug) {
-		
-	}
-	
-
-	
 	public HashMap<String, Double> getCoinPriceMap() {
 		return coinPriceMap;
 	}
 
-	public void getQuotes() {
+	public String getQuotes() {
 		
 		// Set up API request
 		String uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-		List<String> slugList = Arrays.asList((String[]) coinPriceMap.keySet().toArray());
-		// slugList.add("bitcoin");
 		String queryParam = "";
-		for (int i = 0; i < slugList.size(); i++) { 
-			if (i == 0) {
-				queryParam += slugList.get(0);
-			} else {
-				queryParam += "," + slugList.get(0);
-			}
+		for (String slug : coinPriceMap.keySet()) {
+			queryParam += slug + ",";
 		}
+		queryParam = queryParam.substring(0, queryParam.length() - 1);
 	    parameters.add(new BasicNameValuePair("slug",queryParam));
-	    
 	    try {
 	        String result = makeAPICall(uri, parameters);
 	        System.out.println(result);
-	        parseForPrice(result, slugList);
+	        parseForPrice(result, new ArrayList<String>(coinPriceMap.keySet()));
+	        return result;
 	      } catch (IOException e) {
 	        System.out.println("Error: cannont access content - " + e.toString());
 	      } catch (URISyntaxException e) {
 	        System.out.println("Error: Invalid URL " + e.toString());
 	      }
+	    return "NA";
 	    // this can def be improved
 	}
 	
-	public static String makeAPICall(String uri, List<NameValuePair> parameters)
+	public String makeAPICall(String uri, List<NameValuePair> parameters)
 		      throws URISyntaxException, IOException {
 		    String response_content = "";
 

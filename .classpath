@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore-4.4.14.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-20210307.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/selenium-server-standalone-3.141.59.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

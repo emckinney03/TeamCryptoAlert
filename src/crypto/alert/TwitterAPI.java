@@ -26,7 +26,7 @@ public class TwitterAPI {
 	private static final String BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAKnNVwEAAAAAMgOJo7a5myIVyoCvSq6rhmh8kl0%3DvFynAnfUJAU9nKMPb44Egr4oOr8moL6ltjbO8z4HiVpdf5KZyb";
 	private static final String LIST_TWEET_URL = "https://api.twitter.com/2/lists/1462976429876989952/tweets";
 	
-	public static ArrayList<String> getTweetsFromList() {
+	public static ArrayList<String> getTweetsFromList() throws Exception {
 		try {
 			String json = makeAPICall(LIST_TWEET_URL, false);
 			return parseTweets(json);
@@ -64,11 +64,11 @@ public class TwitterAPI {
         return response_content;
     }
 
-    public static ArrayList<String> parseTweets(String json) {
+    public static ArrayList<String> parseTweets(String json) throws Exception {
     	ArrayList<String> list = new ArrayList<>();
         if (json.equals("NA")) {
             System.out.println("Somethings broken. Skipping parse. Twitter.");
-            return list;
+            throw new Exception("Json recieved from twitter is empty. Something went wrong!");
         }
         int count = 0;
         JSONArray arr = (new JSONObject(json)).getJSONArray("data");
