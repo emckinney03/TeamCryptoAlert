@@ -158,7 +158,7 @@ public class TimerServlet extends HttpServlet {
 			
 			for (Follow follow : followers) {
 				User user = users.stream().filter(u -> u.getId() == follow.getUserID()).findFirst().get();
-				//sendMail(user.getUserEmail(), tweet);
+				sendMail(user.getUserEmail(), tweet);
 				System.out.println("[DEBUG] - send email to " + user.getUserEmail() + " info about tweet: " +  tweet);
 			}
 			System.out.println("[DEBUG] - done sending emails.");

@@ -192,8 +192,11 @@ public class UtilDB {
    public static void deleteFollows(Integer id) {
 	   Session session = getSessionFactory().openSession();
 	   Transaction tx = null;
+	   tx = session.beginTransaction();
 	   String hql = "delete from Follow where userID= " + id; 
-	   session.createQuery(hql).executeUpdate();
+	   session.createSQLQuery(hql).executeUpdate();
+	   tx.commit();
+	   session.close();
 //	   try {
 //           session.beginTransaction();
 //
@@ -212,8 +215,11 @@ public class UtilDB {
    public static void deleteUser(Integer id) {
 	   Session session = getSessionFactory().openSession();
 	   Transaction tx = null;
+	   tx = session.beginTransaction();
 	   String hql = "delete from User where userID= " + id; 
-	   session.createQuery(hql).executeUpdate();
+	   session.createSQLQuery(hql).executeUpdate();
+	   tx.commit();
+	   session.close();
    }
    
    public static List<Currency> lookupCurrency(String currencyName) {
