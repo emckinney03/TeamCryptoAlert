@@ -98,7 +98,7 @@ public class UtilDB {
             User user = (User) iterator.next();
             if (user.getUserName().startsWith(keyword)) {
                resultList.add(user);
-      System.out.println(" TESTING " + user.getUserName());
+   
             }
          }
          tx.commit();
@@ -127,6 +127,7 @@ public class UtilDB {
             User user = (User) iterator.next();
             if (user.getUserName().equals(userName)) {
                resultList.add(user);
+               System.out.println(" TESTING " + user.getUserName());
             }
          }
          tx.commit();
