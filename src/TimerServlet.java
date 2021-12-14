@@ -95,10 +95,7 @@ public class TimerServlet extends HttpServlet {
 					// update list of users
 					users = UtilDB.listUsers();
 					follows = UtilDB.listFollow();
-					currencies = UtilDB.listCurrencies();
-					
-					
-					
+					currencies = UtilDB.listCurrencies();					
 					int bitcoinId = -1;
 					int dogecoinId = -1;
 					int cardanoId = -1;
@@ -131,6 +128,7 @@ public class TimerServlet extends HttpServlet {
 						System.out.println("[DEBUG] - grabbing tweet from api.");
 						ArrayList<String> tweets = TwitterAPI.getTweetsFromList();
 						System.out.println("[DEBUG] - sending emails.");
+						
 						for (String tweet : tweets) {
 							tweet = tweet.toLowerCase();
 							if (tweet.contains("$btc") || tweet.contains("bitcoin")) {
@@ -156,16 +154,19 @@ public class TimerServlet extends HttpServlet {
 			}
 		}
 		
-		private void notifyUsers(List<Follow> followers, String tweet) {	
+		private void notifyUsers(List<Follow> followers, String tweet) {
+			
 			for (Follow follow : followers) {
 				User user = users.stream().filter(u -> u.getId() == follow.getUserID()).findFirst().get();
-				sendMail(user.getUserEmail(), tweet);
+				//sendMail(user.getUserEmail(), tweet);
 				System.out.println("[DEBUG] - send email to " + user.getUserEmail() + " info about tweet: " +  tweet);
 			}
 			System.out.println("[DEBUG] - done sending emails.");
 		}
 		
 		private boolean sendMail(String to, String tweet) {
+			
+			System.out.println("Attempting to send email to: " + to);
 	        // Sender's email ID needs to be mentioned
 	        String from = "teamcryptoalert@gmail.com";
 

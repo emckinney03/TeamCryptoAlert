@@ -18,7 +18,10 @@ class CoinMarketCapAPITests {
 
 	@Test
 	void TestAPIPollForPrices() {
-		
+		String apiResult = api.getQuotes();
+		boolean expected = true;
+		boolean actual = apiResult.contains("Bitcoin");
+		assertEquals(expected, actual);
 	}
 
 }

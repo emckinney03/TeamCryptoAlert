@@ -188,6 +188,34 @@ public class UtilDB {
       }
    }
    
+   
+   public static void deleteFollows(Integer id) {
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   String hql = "delete from Follow where userID= " + id; 
+	   session.createQuery(hql).executeUpdate();
+//	   try {
+//           session.beginTransaction();
+//
+//           Follow follow = (Follow) session.get(Follow.class, id);
+//
+//           session.delete(follow);
+//
+//           session.getTransaction().commit();
+//       }
+//       catch (HibernateException e) {
+//           e.printStackTrace();
+//           session.getTransaction().rollback();
+//       }
+   }
+   
+   public static void deleteUser(Integer id) {
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   String hql = "delete from User where userID= " + id; 
+	   session.createQuery(hql).executeUpdate();
+   }
+   
    public static List<Currency> lookupCurrency(String currencyName) {
 	   List<Currency> resultList = new ArrayList<Currency>();
 

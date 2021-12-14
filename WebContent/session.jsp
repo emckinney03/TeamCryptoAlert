@@ -34,51 +34,14 @@
 		}
 		%>
 		<h3>Welcome, <%=validLogin%></h3> <br>
-		<%-- <h4>Note = <%=sessionID %></h4> --%>
-		<%--
-		<form action="<%UtilDB.createNote(validLogin, request.getParameter("noteName"), request.getParameter("noteContents")); %>" method="POST">
-			Label: <input type="text" required="required" name="noteName"> <br>
-			Note: <br>
-			<textarea rows="14" cols="50" name="noteContents"></textarea> <br><br>
-			<input type="submit" value="Create Note" />
-		</form>
-		<br>
-		
-		<table>
-			<tr>
-				<th>Label</th>
-				<th>Contents</th>
-				<th>Delete</th>
-			</tr>
-			
-			<%
-			// String[] noteItems = (String[]) request.getSession().getAttribute("noteList"); 
-			List<Note> noteItems = UtilDB.listNotes(validLogin);
-			for (Note note : noteItems) {
-			%>
-				<tr>
-					<td>
-						<%= note.getLabel()%>
-					</td>
-					<td>
-						<%= note.getContents()%>
-					</td>
-					<td>
-						<form action="<% if (request.getParameter("deleteID") != null) { 
-							UtilDB.deleteNote(Integer.parseInt(request.getParameter("deleteID"))); } %>" method="POST">
-							<input type="text" name="deleteID" value="<%=note.getId()%>" hidden/>
-							<input type="submit" value="Delete" />
-						</form>
-					</td>
-				</tr>
-			<% } %>
-			
-		</table>
-		--%>
-		
+
 		<br><br>
 		<form action="LogoutServlet" method="post">
 			<input type="submit" value="Logout" >
+		</form>
+		
+		<form action="DeleteServlet" method="post">
+			<input type="submit" value="Delete" >
 		</form>
 	</body>
 </html>

@@ -37,33 +37,29 @@ public class RegisterServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String userPass = request.getParameter("userPass");
 		String userEmail = request.getParameter("userEmail");
-		UtilDB.createUser(userName, userPass, userEmail);
-		boolean crypto1= false;
-		boolean crypto2 = false;
-		boolean crypto3 = false;
-		boolean crypto4 = false;
-		
-		if (crypto1 == true) {
-	UtilDB.createFollow(1, UtilDB.lookupUser(userName).get(0).getId());	
-		}
-		if (crypto2 == true) {
-			UtilDB.createFollow(2, UtilDB.lookupUser(userName).get(0).getId());		
-				}
-		if (crypto3 == true) {
-			UtilDB.createFollow(3, UtilDB.lookupUser(userName).get(0).getId());
-				}
-		if (crypto4 == true) {
-			UtilDB.createFollow(4, UtilDB.lookupUser(userName).get(0).getId());	
-				}
-		response.setContentType("text/html");
-
 		if (UtilDB.lookupUser(userName).size() > 0) {
 			userRegistrationFailed(response.getWriter(), userName);
+			return;
 		}
-		else {
-			UtilDB.createUser(userName, userPass, userEmail);
-			userRegistrationSuccess(response.getWriter(), userName);
+		UtilDB.createUser(userName, userPass, userEmail);
+		String[] coins = request.getParameterValues("crypto");
+		
+		for (String coin : coins) {
+			System.out.println("[DEBUG] - " + coin + "being added to " + userName + "'s follows");
+			if (coin.equals("1")) {
+				UtilDB.createFollow(1, UtilDB.lookupUser(userName).get(0).getId());	
+			} if (coin.equals("2")) {
+				UtilDB.createFollow(2, UtilDB.lookupUser(userName).get(0).getId());		
+			} if (coin.equals("3")) {
+				UtilDB.createFollow(3, UtilDB.lookupUser(userName).get(0).getId());
+			} if (coin.equals("4")) {
+				UtilDB.createFollow(4, UtilDB.lookupUser(userName).get(0).getId());	
+			}
 		}
+		
+		response.setContentType("text/html");
+		userRegistrationSuccess(response.getWriter(), userName);
+		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/register.html");
 		rd.include(request, response);
 	}

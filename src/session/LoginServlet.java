@@ -81,9 +81,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userName = request.getParameter("userName");
 		String userPass = request.getParameter("userPass");
-		String userEmail = request.getParameter("userEmail");
 
-		if (userName == null || userPass == null || userEmail == null) {
+		if (userName == null || userPass == null) {
 			loginFailure(request, response);
 		}
 		else {
