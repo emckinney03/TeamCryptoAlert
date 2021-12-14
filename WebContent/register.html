@@ -40,20 +40,28 @@ footer {
 </nav>
 
 <section>
-	<h1>Register</h1>
+	<h1>Team Crypto Alert</h1>
 	
 	<form action="RegisterServlet" method="POST">
 	
 		User Name: <input type="text" name="userName"> <br />
 		Password: <input type="password" name="userPass"> <br />
 		Email: <input type="email" name="userEmail"> <br />
+		<input type="checkbox" id="crypto1" name="crypto1" value="DOGE">
+				<label for="crypto1"> DogeCoin</label><br>
+				<input type="checkbox" id="crypto2" name="crypto2" value="ETH">
+				<label for="crypto2"> Ethereum</label><br>
+				<input type="checkbox" id="crypto3" name="crypto3" value="BTC">
+				<label for="crypto3"> Bitcoin</label><br>
+				<input type="checkbox" id="crypto4" name="crypto4" value="ADA">
+				<label for="crypto4"> Cardano</label><br>
 		<input type="submit" value="Register" />
 	</form>
 
 </section>
 
 <footer>
-TeamCryptoAlert 2021
+TeamCryptoAlert 2021 (All Rights Reserved)
 </footer>
 </body>
 </html>

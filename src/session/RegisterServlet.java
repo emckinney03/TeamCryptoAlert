@@ -36,6 +36,10 @@ public class RegisterServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String userPass = request.getParameter("userPass");
 		String userEmail = request.getParameter("userEmail");
+		String crypto1 = request.getParameter("crypto1");
+		String crypto2 = request.getParameter("crypto2");
+		String crypto3 = request.getParameter("crypto3");
+		String crypto4 = request.getParameter("crypto4");
 		
 		response.setContentType("text/html");
 
