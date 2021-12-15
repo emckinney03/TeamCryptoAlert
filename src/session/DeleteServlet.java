@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import datamodel.Follow;
 import datamodel.User;
 import util.UtilDB;
 
@@ -47,7 +48,12 @@ public class DeleteServlet extends HttpServlet {
         
         User user = UtilDB.lookupUser(userName).get(0);
         
-        UtilDB.deleteFollows(user.getId());
+        for (Follow f : UtilDB.listFollow()) {
+        	if (f.getUserID() == user.getId()) {
+        		UtilDB.deleteFollow(f.getFollowID());
+        	}
+        }
+        
         UtilDB.deleteUser(user.getId());
         
      

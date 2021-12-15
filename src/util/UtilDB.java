@@ -188,39 +188,47 @@ public class UtilDB {
       }
    }
    
-   
-   public static void deleteFollows(Integer id) {
+   public static void deleteFollow(int followID) {
 	   Session session = getSessionFactory().openSession();
 	   Transaction tx = null;
-	   tx = session.beginTransaction();
-	   String hql = "delete from Follow where userID= " + id; 
-	   session.createSQLQuery(hql).executeUpdate();
-	   tx.commit();
-	   session.close();
-//	   try {
-//           session.beginTransaction();
-//
-//           Follow follow = (Follow) session.get(Follow.class, id);
-//
-//           session.delete(follow);
-//
-//           session.getTransaction().commit();
-//       }
-//       catch (HibernateException e) {
-//           e.printStackTrace();
-//           session.getTransaction().rollback();
-//       }
-   }
+	   try {
+		   tx = session.beginTransaction();
+		   Serializable id = followID;
+		   Object persistentInstance = session.load(Follow.class, id);
+		   if (persistentInstance != null) {
+			   System.out.println("Deleting... " + persistentInstance.toString());
+			   session.delete(persistentInstance);
+			   tx.commit();
+		   }
+	   } catch (HibernateException e) {
+		   if (tx != null)
+			   tx.rollback();
+		   e.printStackTrace();
+	   } finally {
+		   session.close();
+	   }
+	}
    
-   public static void deleteUser(Integer id) {
+   public static void deleteUser(int userID) {
 	   Session session = getSessionFactory().openSession();
 	   Transaction tx = null;
-	   tx = session.beginTransaction();
-	   String hql = "delete from User where userID= " + id; 
-	   session.createSQLQuery(hql).executeUpdate();
-	   tx.commit();
-	   session.close();
-   }
+	   try {
+		   tx = session.beginTransaction();
+		   Serializable id = userID;
+		   Object persistentInstance = session.load(User.class, id);
+		   if (persistentInstance != null) {
+			   System.out.println("Deleting... " + persistentInstance.toString());
+			   session.delete(persistentInstance);
+			   tx.commit();
+		   }
+	   } catch (HibernateException e) {
+		   if (tx != null)
+			   tx.rollback();
+		   e.printStackTrace();
+	   } finally {
+		   session.close();
+	   }
+	}
    
    public static List<Currency> lookupCurrency(String currencyName) {
 	   List<Currency> resultList = new ArrayList<Currency>();
